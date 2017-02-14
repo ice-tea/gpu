@@ -46,13 +46,13 @@
 // **===------------------------------------------------------------------===**
 __global__ void reduction(float *g_data, int n)
 {
-	__shared__ float partialSum[n];
+	__shared__ float partialSum[2*BLOCK_SIZE];
 
 	//load data
 	unsigned int t = threadIdx.x;
 	int start = 2*blockIdx.x*blockDim.x;
-	partialSum[id] = g_data[start+id];
-	partialSum[id] = g_data[start+id];
+	partialSum[t] = g_data[start+t];
+	partialSum[t+blockDim.x] = g_data[start+t+blockDim.x];
 
 	for (unsigned int stride = blockDim.x; stride > 0; stride /= 2) {
 		__syncthreads();
