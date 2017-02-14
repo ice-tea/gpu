@@ -151,10 +151,10 @@ int ReadFile(float* M, char* file_name)
 float computeOnDevice(float* h_data, int num_elements)
 { 
     // Device input vectors
-    double *d_v;
+    float *d_v;
  
     // Size, in bytes, of each vector
-    size_t bytes = num_elements*sizeof(double);
+    size_t bytes = num_elements*sizeof(float);
  
     // Allocate memory for each vector on GPU
     cudaMalloc(&d_v, bytes);   
@@ -175,7 +175,7 @@ float computeOnDevice(float* h_data, int num_elements)
     
 
     // Copy array back to host
-    cudaMemcpy( h_data, d_v, sizeof(double), cudaMemcpyDeviceToHost );
+    cudaMemcpy( h_data, d_v, sizeof(float), cudaMemcpyDeviceToHost );
 
  
     // Release device memory
