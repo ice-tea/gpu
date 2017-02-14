@@ -46,7 +46,7 @@
 // **===------------------------------------------------------------------===**
 __global__ void reduction(float *g_data, int n)
 {
-	__shared__ float partialSum[2*BLOCK_SIZE];
+	__shared__ float partialSum[NUM_ELEMENTS];
 
 	//load data
 	unsigned int t = threadIdx.x;
