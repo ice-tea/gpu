@@ -59,6 +59,7 @@ __global__ void reduction(float *g_data, int n)
 		if (t < stride)
 			partialSum[t] += partialSum[t+stride];
 	}
+	g_data[blockIdx.x] = partialSum[0];
 }
 
 #endif // #ifndef _SCAN_NAIVE_KERNEL_H_
