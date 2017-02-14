@@ -149,10 +149,37 @@ int ReadFile(float* M, char* file_name)
 // to h_data.
 // Note: float* h_data is both the input and the output of this function.
 float computeOnDevice(float* h_data, int num_elements)
-{
+{ 
+    // Device input vectors
+    double *d_v;
+ 
+    // Size, in bytes, of each vector
+    size_t bytes = num_elements*sizeof(double);
+ 
+    // Allocate memory for each vector on GPU
+    cudaMalloc(&d_v, bytes);   
+ 
+    // Copy host vectors to device
+    cudaMemcpy( d_v, h_data, bytes, cudaMemcpyHostToDevice);
+ 
+    int blockSize, gridSize;
+ 
+    // Number of threads in each thread block
+    blockSize = 256;
+ 
+    // Number of thread blocks in grid
+    gridSize = 1;
+    
+    // Execute the kernel
+    reduction<<<gridSize, blockSize>>>(d_v, num_elements);
+    
 
-  // placeholder
-  return 0.0f;
+    // Copy array back to host
+    cudaMemcpy( h_data, d_v, sizeof(double), cudaMemcpyDeviceToHost );
 
+ 
+    // Release device memory
+    cudaFree(d_v);
+    return h_data[0];
 }
      
