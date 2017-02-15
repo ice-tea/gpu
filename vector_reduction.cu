@@ -43,6 +43,7 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
+#include <time.h> 
 
 // For the CUDA runtime routines (prefixed with "cuda_")
 #include <cuda_runtime.h>
