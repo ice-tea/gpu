@@ -106,10 +106,12 @@ runTest( int argc, char** argv)
         default:  // No Arguments or one argument
             // initialize the input data on the host to be integer values
             // between 0 and 1000
+            // real random
+            srand(unsigned)time(NULL));
             for( unsigned int i = 0; i < num_elements; ++i) 
             {
                 h_data[i] = floorf(1000*(rand()/(float)RAND_MAX));
-                printf("writing %f ",h_data[i]);
+                //printf("writing %f ",h_data[i]);
 
             }
         break;  
