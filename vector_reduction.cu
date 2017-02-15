@@ -109,6 +109,8 @@ runTest( int argc, char** argv)
             for( unsigned int i = 0; i < num_elements; ++i) 
             {
                 h_data[i] = floorf(1000*(rand()/(float)RAND_MAX));
+                printf("writing %f ",h_data[i]);
+
             }
         break;  
     }
