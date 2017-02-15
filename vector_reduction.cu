@@ -139,7 +139,7 @@ int ReadFile(float* M, char* file_name)
     myFile = fopen(file_name, "r");
 
     while (!feof(myFile) && pos<elements_read){
-        fscanf(myfile,"%lf",&M[pos]);
+        fscanf(myFile,"%lf",&M[pos]);
         printf("reading %.15f ",M[pos++]);
     }
     fclose(myFile);
