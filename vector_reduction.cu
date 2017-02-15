@@ -92,8 +92,7 @@ runTest( int argc, char** argv)
     //   host's result.
     // * One argument: Read the input data array from the given file.
     switch(argc-1)
-    {      
-        /* --Make your own--
+    {
         case 1:  // One Argument
             errorM = ReadFile(h_data, argv[1]);
             if(errorM != 1)
@@ -102,7 +101,7 @@ runTest( int argc, char** argv)
                 exit(1);
             }
         break;
-        */
+        
         
         default:  // No Arguments or one argument
             // initialize the input data on the host to be integer values
@@ -132,7 +131,6 @@ runTest( int argc, char** argv)
     free( h_data);
 }
 
-/*--make your own--
 int ReadFile(float* M, char* file_name)
 {
 	unsigned int elements_read = NUM_ELEMENTS;
@@ -141,7 +139,7 @@ int ReadFile(float* M, char* file_name)
     else
         return 0;
 }
-*/
+
 
 // **===----------------- Modify this function ---------------------===**
 // Take h_data from host, copies it to device, setup grid and thread 
