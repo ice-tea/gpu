@@ -134,10 +134,20 @@ runTest( int argc, char** argv)
 int ReadFile(float* M, char* file_name)
 {
 	unsigned int elements_read = NUM_ELEMENTS;
-	if (cutReadFilef(file_name, &M, &elements_read, true))
-        return 1;
-    else
+    unsigned int pos=0;
+    FILE *myFile;
+    myFile = fopen(file_name, "r");
+
+    while (!feof(myFile) && pos<elements_read){
+        fscanf(myfile,"%lf",&M[pos]);
+        printf("reading %.15f ",M[pos++]);
+    }
+    fclose(myFile);
+    
+	if (pos!=elements_read)
         return 0;
+    else
+        return 1;
 }
 
 
