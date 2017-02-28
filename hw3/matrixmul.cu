@@ -47,7 +47,7 @@
 #define TILE_WIDTH 16
 
 // includes, kernels
-//#include <matrixmul_kernel.cu>
+#include "matrixmul_kernel.cu"
 
 ////////////////////////////////////////////////////////////////////////////////
 // declarations, forward
