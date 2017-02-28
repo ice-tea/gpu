@@ -42,6 +42,7 @@
 
 #include <stdio.h>
 #include "matrixmul.h"
+#define TILE_WIDTH 16
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Simple test kernel for device functionality
