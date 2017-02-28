@@ -1,0 +1,24 @@
+ubuntu@ip-172-31-43-190:~/677/gpu/hw3$ nvcc -Xptxas -v matrixmul_kernel.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z15MatrixMulKernel6MatrixS_S_' for 'sm_20'
+ptxas info    : Function properties for _Z15MatrixMulKernel6MatrixS_S_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 22 registers, 2048 bytes smem, 80 bytes cmem[0], 4 bytes cmem[16]
+/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o: In function `_start':
+(.text+0x20): undefined reference to `main'
+collect2: error: ld returned 1 exit status
+ubuntu@ip-172-31-43-190:~/677/gpu/hw3$ ./test-final 
+GPU computation complete
+CPU computation complete
+Test PASSED
+ubuntu@ip-172-31-43-190:~/677/gpu/hw3$ nvcc -Xptxas -v matrixmul_kernel.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z15MatrixMulKernel6MatrixS_S_' for 'sm_20'
+ptxas info    : Function properties for _Z15MatrixMulKernel6MatrixS_S_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 22 registers, 2048 bytes smem, 80 bytes cmem[0], 4 bytes cmem[16]
+/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o: In function `_start':
+(.text+0x20): undefined reference to `main'
+collect2: error: ld returned 1 exit status
