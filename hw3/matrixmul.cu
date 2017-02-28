@@ -165,7 +165,7 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
     dim3 dimBlock(TILE_WIDTH, TILE_WIDTH);
     dim3 dimGrid(P.height, P.width);
     // Launch the device computation threads!
-    MatrixMulKernel<<<gridSize, blockSize>>>(Md, Nd, Pd);
+    MatrixMulKernel<<<dimGrid, dimBlock>>>(Md, Nd, Pd);
 
     // Read P from the device
     CopyFromDeviceMatrix(P, Pd); 
