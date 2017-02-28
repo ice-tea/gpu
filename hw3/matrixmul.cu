@@ -44,6 +44,8 @@
 #include "matrixmul.h"
 #include "nocutil.h"
 
+#define TILE_WIDTH 16
+
 // includes, kernels
 //#include <matrixmul_kernel.cu>
 
@@ -160,8 +162,10 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
     CopyToDeviceMatrix(Pd, P); // Clear memory
 
 	// Setup the execution configuration
- 
+    dim3 dimBlock(TILE_WIDTH, TILE_WIDTH);
+    dim3 dimGrid(P.height, P.width);
     // Launch the device computation threads!
+    MatrixMulKernel<<<gridSize, blockSize>>>(Md, Nd, Pd);
 
     // Read P from the device
     CopyFromDeviceMatrix(P, Pd); 
