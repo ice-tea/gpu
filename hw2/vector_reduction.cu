@@ -141,6 +141,7 @@ int ReadFile(float* M, char* file_name)
 	unsigned int elements_read = NUM_ELEMENTS;
     unsigned int pos=0;
     FILE *myFile;
+    // Error Handle
     if ( !(myFile = fopen(file_name, "r")) )
         return 0;
 
