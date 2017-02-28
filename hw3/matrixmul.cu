@@ -107,12 +107,12 @@ int main(int argc, char** argv) {
 		}
 	}
 	//check the result size
-	long result_size = M.height * N.width
+	long result_size = M.height * N.width;
 	if(result_size > 64000){
 		printf("Error the input matrix is too big for %d, %d\n", M.height, N.width);
 		return 1;
 	}
-	
+
 	// M * N on the device
     MatrixMulOnDevice(M, N, P);
     
