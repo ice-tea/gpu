@@ -54,7 +54,7 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 {
 	__shared__ float Mds[TILE_WIDTH][TILE_WIDTH];
 	__shared__ float Nds[TILE_WIDTH][TILE_WIDTH];
-	int m = M.width, n = M.height, k = N.height;
+	int m = M.height, n = M.weight, k = N.weight;
 
 	int bx = blockIdx.x, by = blockIdx.y;
 	int tx = threadIdx.x, ty = threadIdx.y;
@@ -70,6 +70,7 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 			Mds[ty][tx] = M.elements[Row*n + (i*TILE_WIDTH + tx)];
 		else
 			Mds[ty][tx] = 0.0;
+		
 		if(i*TILE_WIDTH + ty < n && Col < k)
 			Nds[ty][tx] = N.elements[(i*TILE_WIDTH + ty)*k + Col];
 		else
