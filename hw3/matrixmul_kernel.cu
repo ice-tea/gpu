@@ -64,10 +64,16 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 	float PValue = 0.0;
 
 	//loop M and N tile by tile
-	for (unsigned int i = 0; i < n/TILE_WIDTH; ++i){
+	for (unsigned int i = 0; i < (n-1)/TILE_WIDTH+1; ++i){
 		//load into shared memory
-		Mds[ty][tx] = M.elements[Row*n + (i*TILE_WIDTH + tx)];
-		Nds[ty][tx] = N.elements[(i*TILE_WIDTH + ty)*k + Col];
+		if(Row<m && i*TILE_WIDTH+tx<n)
+			Mds[ty][tx] = M.elements[Row*n + (i*TILE_WIDTH + tx)];
+		else
+			Mds[ty][tx] = 0.0;
+		if(i*TILE_WIDTH + ty < n && Col < k)
+			Nds[ty][tx] = N.elements[(i*TILE_WIDTH + ty)*k + Col];
+		else
+			Nds[ty][tx] = 0.0;
 		__syncthreads();
 
 		//calculate
@@ -76,7 +82,8 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
         }
         __syncthreads();
 	}
-	P.elements[Row*k + Col] = PValue;
+	if(Row<m && Col<k)
+		P.elements[Row*k + Col] = PValue;
 }
 
 #endif // #ifndef _MATRIXMUL_KERNEL_H_
