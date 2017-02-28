@@ -63,6 +63,7 @@ int ReadFile(Matrix* M, char* file_name);
 void WriteFile(Matrix M, char* file_name);
 void FreeDeviceMatrix(Matrix* M);
 void FreeMatrix(Matrix* M);
+void OutPut(Matrix* M);
 
 void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P);
 
@@ -115,18 +116,18 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	OutPut(M);
-	OutPut(N);
+	OutPut(&M);
+	OutPut(&N);
 	// M * N on the device
     MatrixMulOnDevice(M, N, P);
-    OutPut(P);
+    OutPut(&P);
     
 	printf("GPU computation complete\n");
     // compute the matrix multiplication on the CPU for comparison
     Matrix reference = AllocateMatrix(P.height, P.width, 0);
     computeGold(reference.elements, M.elements, N.elements, M.height, M.width, N.width);
-    OutPut(reference);
-    
+    OutPut(&reference);
+
 	printf("CPU computation complete\n");
     // in this case check if the result is equivalent to the expected soluion
     bool res = nocutComparefe(reference.elements, P.elements, 
@@ -264,12 +265,12 @@ void WriteFile(Matrix M, char* file_name)
 }
 
 // OutPut Matrix
-void OutPut(Matrix M)
+void OutPut(Matrix* M)
 {
 	printf("Matrix elements:\n ");
-    for(unsigned int i = 0; i < M.height * M.width; i++)
+    for(unsigned int i = 0; i < M->height * M->width; i++)
 	{
-		printf("%4.2f(%%) ", M.elements[i]);
+		printf("%4.2f(%%) ", M->elements[i]);
 	}
 	printf("Matrix done.\n ");
 }
