@@ -22,3 +22,7 @@ ptxas info    : Used 22 registers, 2048 bytes smem, 80 bytes cmem[0], 4 bytes cm
 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o: In function `_start':
 (.text+0x20): undefined reference to `main'
 collect2: error: ld returned 1 exit status
+
+
+Used 22 registers, 2048 bytes smem, 80 bytes cmem[0], 4 bytes cmem[16]
+Used 22 registers, 2048 bytes smem, 80 bytes cmem[0], 4 bytes cmem[16]

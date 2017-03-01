@@ -111,15 +111,13 @@ int main(int argc, char** argv) {
 		}
 	}
 	//check the result size
-	printf("Test case is %d, %d, %d %d \n", M.height, M.width, N.height, N.width);
+	printf("Test case is (%d, %d) * (%d, %d) \n", M.height, M.width, N.height, N.width);
 	long result_size = M.height * N.width;
 	if(result_size > 64000){
-		printf("Error the input matrix is too big for %d, %d\n", M.height, N.width);
+		printf("Error the input matrix is too big for result (%d, %d) \n", M.height, N.width);
 		return 1;
 	}
 
-	//OutPut(&M);
-	//OutPut(&N);
 	// M * N on the device
     MatrixMulOnDevice(M, N, P);
     OutPut(&P);
@@ -128,7 +126,7 @@ int main(int argc, char** argv) {
     // compute the matrix multiplication on the CPU for comparison
     Matrix reference = AllocateMatrix(P.height, P.width, 0);
     computeGold(reference.elements, M.elements, N.elements, M.height, M.width, N.width);
-    OutPut(&reference);
+    //OutPut(&reference);
 
 	printf("CPU computation complete\n");
     // in this case check if the result is equivalent to the expected soluion
@@ -170,11 +168,8 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 
 	// Setup the execution configuration
     dim3 dimBlock(TILE_WIDTH, TILE_WIDTH);
-    printf("Test case is %d, %d, %d %d \n", M.height, M.width, N.height, N.width);
-    unsigned int bigger = (M.height > N.width)? M.height : N.width;
-    printf("For P %d %d %d \n", P.height, P.width, bigger);
     dim3 dimGrid((N.width-1)/TILE_WIDTH + 1, (M.height-1)/TILE_WIDTH + 1);
-    //dim3 dimGrid((bigger-1)/TILE_WIDTH + 1, (bigger-1)/TILE_WIDTH + 1);
+
     // Launch the device computation threads!
     MatrixMulKernel<<<dimGrid, dimBlock>>>(Md, Nd, Pd);
 
