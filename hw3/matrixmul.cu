@@ -39,6 +39,7 @@
 
 // includes, system
 #include <string>
+#include <time.h>
 
 // includes, project
 #include "matrixmul.h"
@@ -78,7 +79,7 @@ int main(int argc, char** argv) {
 	Matrix  P;
 	int errorM = 0, errorN = 0;
 	
-	srand(52);
+	srand((unsigned)time(NULL));
 	
 	if(argc != 5 && argc != 4) 
 	{
@@ -110,17 +111,17 @@ int main(int argc, char** argv) {
 		}
 	}
 	//check the result size
-	//long result_size = M.height * N.width;
-	//if(result_size > 64000){
-	//	printf("Error the input matrix is too big for %d, %d\n", M.height, N.width);
-	//	return 1;
-	//}
+	long result_size = M.height * N.width;
+	if(result_size > 64000){
+		printf("Error the input matrix is too big for %d, %d\n", M.height, N.width);
+		return 1;
+	}
 
 	//OutPut(&M);
 	//OutPut(&N);
 	// M * N on the device
     MatrixMulOnDevice(M, N, P);
-    //OutPut(&P);
+    OutPut(&P);
     
 	printf("GPU computation complete\n");
     // compute the matrix multiplication on the CPU for comparison
@@ -267,10 +268,13 @@ void WriteFile(Matrix M, char* file_name)
 // OutPut Matrix
 void OutPut(Matrix* M)
 {
-	printf("Matrix elements:\n ");
-    for(unsigned int i = 0; i < M->height * M->width; i++)
+	printf("Output result Matrix:\n ");
+    for(unsigned int i = 0; i < M->height; i++)
 	{
-		printf("%4.2f(%%) ", M->elements[i]);
+		for(unsigned int j = 0; j < M->width; j++){
+			printf("%4.2f ", M->elements[i*M->width + j]);
+		}
+		printf("\n");
 	}
-	printf("Matrix done.\n ");
+	printf("Output Matrix done.\n");
 }
