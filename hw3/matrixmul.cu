@@ -118,8 +118,8 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	OutPut(&M);
-	OutPut(&N);
+	//OutPut(&M);
+	//OutPut(&N);
 	// M * N on the device
     MatrixMulOnDevice(M, N, P);
     OutPut(&P);
