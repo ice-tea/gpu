@@ -171,9 +171,10 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	// Setup the execution configuration
     dim3 dimBlock(TILE_WIDTH, TILE_WIDTH);
     printf("Test case is %d, %d, %d %d \n", M.height, M.width, N.height, N.width);
-    printf("For P %d %d \n", P.height, P.width);
     unsigned int bigger = (M.height > N.width)? M.height : N.width;
-    dim3 dimGrid((M.width-1)/TILE_WIDTH + 1, (bigger-1)/TILE_WIDTH + 1);
+    printf("For P %d %d %d \n", P.height, P.width, bigger);
+    //dim3 dimGrid((M.width-1)/TILE_WIDTH + 1, (bigger-1)/TILE_WIDTH + 1);
+    dim3 dimGrid((bigger-1)/TILE_WIDTH + 1, (M.width-1)/TILE_WIDTH + 1);
     // Launch the device computation threads!
     MatrixMulKernel<<<dimGrid, dimBlock>>>(Md, Nd, Pd);
 
