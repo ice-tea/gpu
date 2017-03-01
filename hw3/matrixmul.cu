@@ -118,8 +118,8 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	//OutPut(&M);
-	//OutPut(&N);
+	OutPut(&M);
+	OutPut(&N);
 	// M * N on the device
     MatrixMulOnDevice(M, N, P);
     OutPut(&P);
@@ -128,7 +128,7 @@ int main(int argc, char** argv) {
     // compute the matrix multiplication on the CPU for comparison
     Matrix reference = AllocateMatrix(P.height, P.width, 0);
     computeGold(reference.elements, M.elements, N.elements, M.height, M.width, N.width);
-    //OutPut(&reference);
+    OutPut(&reference);
 
 	printf("CPU computation complete\n");
     // in this case check if the result is equivalent to the expected soluion
