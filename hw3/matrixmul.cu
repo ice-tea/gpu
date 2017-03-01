@@ -120,7 +120,7 @@ int main(int argc, char** argv) {
 
 	// M * N on the device
     MatrixMulOnDevice(M, N, P);
-    OutPut(&P);
+    //OutPut(&P);
     
 	printf("GPU computation complete\n");
     // compute the matrix multiplication on the CPU for comparison
