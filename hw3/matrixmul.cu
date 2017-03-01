@@ -111,6 +111,7 @@ int main(int argc, char** argv) {
 		}
 	}
 	//check the result size
+	printf("Test case is %d, %d, %d %d \n", M.height, M.width, N.height, N.width);
 	long result_size = M.height * N.width;
 	if(result_size > 64000){
 		printf("Error the input matrix is too big for %d, %d\n", M.height, N.width);
