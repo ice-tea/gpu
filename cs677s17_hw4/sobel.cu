@@ -209,6 +209,22 @@ int main( int argc, char **argv )
 	SobelOnDevice(resultGPU, pic, xsize, ysize, thresh);
 	write_ppm( "result9000gold.ppm", xsize, ysize, 255, resultGPU);
 
+	//output for test
+	fprintf("cpu result:\n");
+	for(int i=0; i<10; i++){
+		for(int j=0; j<10; ++j){
+			fprintf("%d \t", result[i*width + j]);
+		}
+		fprintf("\n")
+	}
+	fprintf("gpu result:\n");
+	for(int i=0; i<10; i++){
+		for(int j=0; j<10; ++j){
+			fprintf("%d \t", resultGPU[i*width + j]);
+		}
+		fprintf("\n")
+	}
+
 
 	fprintf(stderr, "sobel done\n"); 
 
