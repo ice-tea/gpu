@@ -218,7 +218,7 @@ int main( int argc, char **argv )
 	write_ppm( "result9000gold.ppm", xsize, ysize, 255, resultGPU);
 
 	//check for test
-	printf( "Test %s\n", (check(resultGPU, result,numbytes)) ? "PASSED" : "FAILED");
+	printf( "Test %s\n", (check(resultGPU, result, numbytes/3)) ? "PASSED" : "FAILED");
 	
 	fprintf(stderr, "sobel done\n"); 
 
