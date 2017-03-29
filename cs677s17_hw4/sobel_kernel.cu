@@ -7,7 +7,7 @@
 #define MASK_WIDTH 3
 
 
-__global__ void SobelKernel(int *result,unsigned int *pic, int xsize, int ysize)
+__global__ void SobelKernel(int *result,unsigned int *pic, int xsize, int ysize, int thresh)
 {
 	int tx = threadIdx.x, ty = threadIdx.y;
 
@@ -25,8 +25,9 @@ __global__ void SobelKernel(int *result,unsigned int *pic, int xsize, int ysize)
 	else{
 		SD[ty][tx] = 0;
 	}
-	int thresh = DEFAULT_THRESHOLD;
-	int sum1, sum2, magnitude;
+
+	__syncthreads();
+	int sum1, sum2, magnitude, output;
 
 	if(ty < TILE_WIDTH && tx < TILE_WIDTH){
 		sum1 =  SD[ty][tx+2] - SD[ty][tx] 
@@ -39,10 +40,13 @@ __global__ void SobelKernel(int *result,unsigned int *pic, int xsize, int ysize)
 		magnitude =  sum1*sum1 + sum2*sum2;
 
 		if (magnitude > thresh)
-			result[offset] = 255;
+			output = 255;
 		else 
-			result[offset] = 0;
+			output = 0;
+	}
 
+	if(row < ysize && col < xsize){
+		result[row * xsize + ysize] = output;
 	}
 }
 
