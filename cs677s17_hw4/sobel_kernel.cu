@@ -35,7 +35,7 @@ __global__ void SobelKernel(int *result,unsigned int *pic, int xsize, int ysize,
 			+  SD[ty+2][tx+2]-  SD[ty+2][tx];
       
 		sum2 =  SD[ty][tx] + 2 * SD[ty][tx+1] + SD[ty][tx+2]
-			- SD[ty+2][tx] - 2 * SD[ty+2][tx+1] - SD[ty+2][tx+2]
+			- SD[ty+2][tx] - 2 * SD[ty+2][tx+1] - SD[ty+2][tx+2];
       
 		magnitude =  sum1*sum1 + sum2*sum2;
 
