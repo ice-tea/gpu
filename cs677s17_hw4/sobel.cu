@@ -213,14 +213,14 @@ int main( int argc, char **argv )
 	printf("cpu result:\n");
 	for(int row=0; row<ysize; row++){
 		for(int col=0; col<xsize; ++col){
-			printf("%d \t", result[row*xsize + col]);
+			printf("%d ", result[row*xsize + col]);
 		}
 		printf("\n");
 	}
 	printf("gpu result:\n");
 	for(int row=0; row<ysize; row++){
 		for(int col=0; col<xsize; ++col){
-			printf("%d \t", resultGPU[row*xsize + col]);
+			printf("%d ", resultGPU[row*xsize + col]);
 		}
 		printf("\n");
 	}
