@@ -45,7 +45,7 @@ __global__ void SobelKernel(int *result,unsigned int *pic, int width, int height
 			output = 0;
 	}
 
-	if(row < ysize && col < xsize){
+	if(row < height && col < width){
 		result[row * width + col] = output;
 	}
 }
