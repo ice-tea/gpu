@@ -15,7 +15,7 @@
 #define BLOCK_WIDTH 16
 
 
-void SobelOnDevice(unsigned int* result, int* pic, int xsize, int ysize);
+void SobelOnDevice(int* result, unsigned int* pic, int xsize, int ysize);
 
 unsigned int *read_ppm( char *filename, int * xsize, int * ysize, int *maxval ){
   
@@ -217,7 +217,7 @@ int main( int argc, char **argv )
 ////////////////////////////////////////////////////////////////////////////////
 //! Sobel On CUDA
 ////////////////////////////////////////////////////////////////////////////////
-void SobelOnDevice(unsigned int* result, int* pic, int xsize, int ysize)
+void SobelOnDevice(int* result,unsigned int* pic, int xsize, int ysize)
 {
 	// Device input vectors
     unsigned int *d_pic;
