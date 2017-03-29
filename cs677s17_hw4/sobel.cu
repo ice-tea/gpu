@@ -210,6 +210,7 @@ int main( int argc, char **argv )
 	write_ppm( "result9000gold.ppm", xsize, ysize, 255, resultGPU);
 
 	//output for test
+	/*
 	printf("cpu result:\n");
 	for(int row=0; row<ysize; row++){
 		for(int col=0; col<xsize; ++col){
@@ -225,7 +226,7 @@ int main( int argc, char **argv )
 		printf("\n");
 	}
 
-
+	*/
 	fprintf(stderr, "sobel done\n"); 
 
 }

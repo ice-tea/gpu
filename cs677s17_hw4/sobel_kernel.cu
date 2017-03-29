@@ -44,7 +44,9 @@ __global__ void SobelKernel(int *result,unsigned int *pic, int width, int height
 		else 
 			output = 0;
 
-		if(row < height && col < width)
+		if(row == 0 || row == height-1 || col==0 || col == width-1)
+			result[row * width + col] = 0;
+		else if(row < height && col < width)
 			result[row * width + col] = output;
 	}
 	__syncthreads();
