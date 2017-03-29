@@ -4,14 +4,18 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include "string.h"
+#include "sobel_kernel.cu"
 
 
 #define DEFAULT_THRESHOLD  8000
 
 #define DEFAULT_FILENAME "BWstop-sign.ppm"
 
+#define TILE_WIDTH 14
+#define BLOCK_WIDTH 16
 
 
+void SobelOnDevice(int* result, int* pic, int xsize, int ysize);
 
 unsigned int *read_ppm( char *filename, int * xsize, int * ysize, int *maxval ){
   
@@ -196,9 +200,52 @@ int main( int argc, char **argv )
 	write_ppm( "result8000gold.ppm", xsize, ysize, 255, result);
 
 
-    // TO-DO: de-allocate !!!!
+    // GPU Version
+    int *resultGPU = (int *) malloc( numbytes );
+	if (!resultGPU) { 
+		fprintf(stderr, "sobel() unable to malloc %d bytes\n", numbytes);
+		exit(-1); // fail
+	}
+	SobelOnDevice(resultGPU, pic, xsize, ysize);
+
 
 	fprintf(stderr, "sobel done\n"); 
 
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//! Sobel On CUDA
+////////////////////////////////////////////////////////////////////////////////
+void SobelOnDevice(int* result, int* pic, int xsize, int ysize)
+{
+	// Device input vectors
+    int *d_pic;
+    size_t bytes = xsize * ysize * sizeof( int );
+ 
+    // Allocate memory for each vector on GPU
+    cudaMalloc(&d_pic, bytes);   
+ 
+    // Copy host vectors to device
+    cudaMemcpy(d_pic, pic, bytes, cudaMemcpyHostToDevice);
+
+
+    // Allocate P on the device
+    int *d_res;
+    cudaMalloc(&d_res, 3*bytes);
+
+	// Setup the execution configuration
+    dim3 dimBlock(BLOCK_WIDTH, BLOCK_WIDTH);
+    dim3 dimGrid((ysize-1)/TILE_WIDTH + 1, (xsize-1)/TILE_WIDTH + 1, 1);
+
+    // Launch the device computation threads!
+    SobelKernel<<<dimGrid, dimBlock>>>(d_res, d_pic, xsize, ysize);
+
+    // Read P from the device
+    CopyFromDeviceMatrix(result, d_res); 
+
+    // Free device matrices
+    FreeDeviceMatrix(&d_pic);
+    FreeDeviceMatrix(&d_res);
 }
 
