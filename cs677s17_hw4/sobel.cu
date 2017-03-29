@@ -216,20 +216,18 @@ int main( int argc, char **argv )
 		exit(-1); // fail
 	}
 	SobelOnDevice(resultGPU, pic, xsize, ysize, thresh);
-	
-	write_ppm( "result9000gold.ppm", xsize, ysize, 255, resultGPU);
-
 	//check for test
 	printf("xsize is %d, and ysize is %d: \n ", xsize, ysize);
 	printf( "Test %s\n", (check(resultGPU, result, xsize * ysize)) ? "PASSED" : "FAILED");
-	
+
+	write_ppm( "result9000gold.ppm", xsize, ysize, 255, resultGPU);
 	fprintf(stderr, "sobel done\n"); 
 
 }
 ////////////////////////////////////////////////////////////////////////////////
 //! Sobel On CUDA
 ////////////////////////////////////////////////////////////////////////////////
-void SobelOnDevice(int* result,unsigned int* pic, int width, int height, int thresh)
+void SobelOnDevice(int* result, unsigned int* pic, int width, int height, int thresh)
 {
 	// Device input vectors
     unsigned int *d_pic;
