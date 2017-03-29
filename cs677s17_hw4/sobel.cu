@@ -15,7 +15,7 @@
 #define BLOCK_WIDTH 16
 
 
-void SobelOnDevice(int* result, unsigned int* pic, int xsize, int ysize, int thresh);
+void SobelOnDevice(int* result, unsigned int* pic, int width, int height, int thresh);
 
 unsigned int *read_ppm( char *filename, int * xsize, int * ysize, int *maxval ){
   
@@ -218,11 +218,11 @@ int main( int argc, char **argv )
 ////////////////////////////////////////////////////////////////////////////////
 //! Sobel On CUDA
 ////////////////////////////////////////////////////////////////////////////////
-void SobelOnDevice(int* result,unsigned int* pic, int xsize, int ysize, int thresh)
+void SobelOnDevice(int* result,unsigned int* pic, int width, int height, int thresh)
 {
 	// Device input vectors
     unsigned int *d_pic;
-    size_t bytes = xsize * ysize * sizeof( int );
+    size_t bytes = width * height * sizeof( int );
  
     // Allocate memory for each vector on GPU
     cudaMalloc(&d_pic, bytes);   
@@ -237,10 +237,10 @@ void SobelOnDevice(int* result,unsigned int* pic, int xsize, int ysize, int thre
 
 	// Setup the execution configuration
     dim3 dimBlock(BLOCK_WIDTH, BLOCK_WIDTH);
-    dim3 dimGrid((ysize-1)/TILE_WIDTH + 1, (xsize-1)/TILE_WIDTH + 1, 1);
+    dim3 dimGrid((width-1)/TILE_WIDTH + 1, (height-1)/TILE_WIDTH + 1, 1);
 
     // Launch the device computation threads!
-    SobelKernel<<<dimGrid, dimBlock>>>(d_res, d_pic, xsize, ysize, thresh);
+    SobelKernel<<<dimGrid, dimBlock>>>(d_res, d_pic, width, height, thresh);
 
     // Copy array back to host
     cudaMemcpy(result, d_res, 3*bytes, cudaMemcpyDeviceToHost ); 
