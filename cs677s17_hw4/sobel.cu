@@ -142,6 +142,7 @@ void write_ppm( char *filename, int xsize, int ysize, int maxval, int *pic)
 bool check(int* des, int* src, int len){
 	for(int i=0; i<len; ++i){
 		if(des[i] != src[i]){
+			printf("at %d des = %d, src = %d", i, des[i], src[i]); 
 			return false;
 		}
 	}
