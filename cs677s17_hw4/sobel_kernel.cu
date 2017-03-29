@@ -27,7 +27,7 @@ __global__ void SobelKernel(int *result,unsigned int *pic, int width, int height
 	}
 	__syncthreads();
 
-	int sum1, sum2, magnitude, output;
+	int sum1=0, sum2=0, magnitude=0, output=0;
 
 	if(ty < TILE_WIDTH && tx < TILE_WIDTH){
 		sum1 =  SD[ty][tx+2] - SD[ty][tx] 
