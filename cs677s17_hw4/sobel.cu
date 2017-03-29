@@ -207,6 +207,7 @@ int main( int argc, char **argv )
 		exit(-1); // fail
 	}
 	SobelOnDevice(resultGPU, pic, xsize, ysize);
+	write_ppm( "result9000gold.ppm", xsize, ysize, 255, resultGPU);
 
 
 	fprintf(stderr, "sobel done\n"); 
