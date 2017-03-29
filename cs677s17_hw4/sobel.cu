@@ -211,16 +211,16 @@ int main( int argc, char **argv )
 
 	//output for test
 	printf("cpu result:\n");
-	for(int i=0; i<10; i++){
-		for(int j=0; j<10; ++j){
-			printf("%d \t", result[i*xsize + j]);
+	for(int row=0; row<ysize; row++){
+		for(int col=0; col<xsize; ++col){
+			printf("%d \t", result[row*xsize + col]);
 		}
 		printf("\n");
 	}
 	printf("gpu result:\n");
-	for(int i=0; i<10; i++){
-		for(int j=0; j<10; ++j){
-			printf("%d \t", resultGPU[i*xsize + j]);
+	for(int row=0; row<ysize; row++){
+		for(int col=0; col<xsize; ++col){
+			printf("%d \t", resultGPU[row*xsize + col]);
 		}
 		printf("\n");
 	}
