@@ -138,7 +138,15 @@ void write_ppm( char *filename, int xsize, int ysize, int maxval, int *pic)
 	fclose(fp);
 }
 
-
+//check
+bool check(int* des, int* src, int len){
+	for(int i=0; i<len; ++i){
+		if(des[i] != src[i]){
+			return false;
+		}
+	}
+	return ture;
+}
 
 
 int main( int argc, char **argv )
@@ -209,29 +217,12 @@ int main( int argc, char **argv )
 	SobelOnDevice(resultGPU, pic, xsize, ysize, thresh);
 	write_ppm( "result9000gold.ppm", xsize, ysize, 255, resultGPU);
 
-	//output for test
-	/*
-	printf("cpu result:\n");
-	for(int row=0; row<ysize; row++){
-		for(int col=0; col<xsize; ++col){
-			printf("%d ", result[row*xsize + col]);
-		}
-		printf("\n");
-	}
-	printf("gpu result:\n");
-	for(int row=0; row<ysize; row++){
-		for(int col=0; col<xsize; ++col){
-			printf("%d ", resultGPU[row*xsize + col]);
-		}
-		printf("\n");
-	}
-
-	*/
+	//check for test
+	printf( "Test %s\n", (check(resultGPU, result,numbytes)) ? "PASSED" : "FAILED");
+	
 	fprintf(stderr, "sobel done\n"); 
 
 }
-
-
 ////////////////////////////////////////////////////////////////////////////////
 //! Sobel On CUDA
 ////////////////////////////////////////////////////////////////////////////////
