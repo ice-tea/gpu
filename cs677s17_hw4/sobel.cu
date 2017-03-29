@@ -145,7 +145,7 @@ bool check(int* des, int* src, int len){
 			return false;
 		}
 	}
-	return ture;
+	return true;
 }
 
 
