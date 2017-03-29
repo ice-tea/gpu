@@ -216,11 +216,12 @@ int main( int argc, char **argv )
 		exit(-1); // fail
 	}
 	SobelOnDevice(resultGPU, pic, xsize, ysize, thresh);
+	
 	write_ppm( "result9000gold.ppm", xsize, ysize, 255, resultGPU);
 
 	//check for test
 	printf("xsize is %d, and ysize is %d: \n ", xsize, ysize);
-	printf( "Test %s\n", (check(resultGPU, result, numbytes/3)) ? "PASSED" : "FAILED");
+	printf( "Test %s\n", (check(resultGPU, result, xsize * ysize)) ? "PASSED" : "FAILED");
 	
 	fprintf(stderr, "sobel done\n"); 
 
